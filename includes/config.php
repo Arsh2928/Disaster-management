@@ -2,16 +2,20 @@
 session_start();
 
 // Database configuration
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'disaster_management');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: 'disaster_management');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
 
 // Email configuration
 define('ADMIN_EMAIL', 'arshdeep17022005@gmail.com');
 define('SITE_NAME', 'Disaster Management System');
 define('SITE_EMAIL', 'arshdeep17022005@gmail.com');
-define('BASE_URL', 'http://localhost/disaster-management');
+if (getenv('VERCEL_URL')) {
+    define('BASE_URL', 'https://' . getenv('VERCEL_URL'));
+} else {
+    define('BASE_URL', getenv('BASE_URL') ?: 'http://localhost/disaster-management');
+}
 
 // Create database connection
 try {
