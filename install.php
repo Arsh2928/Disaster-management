@@ -3,9 +3,9 @@
 // Quick local setup helper: creates database and tables using sql/mysql.sql
 // Only for local dev and trusted environments.
 
-$dsn = 'mysql:host=' . (getenv('DB_HOST') ?: 'localhost') . ';charset=utf8mb4';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
+$dsn = 'mysql:host=gateway01.ap-southeast-1.prod.aws.tidbcloud.com;port=4000;dbname=test;charset=utf8mb4';
+$user = '2tGN85HQqGriFU6.root';
+$pass = 'fWg2s6o5EGjMbmT7';
 
 try {
     $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);

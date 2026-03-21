@@ -2,10 +2,10 @@
 session_start();
 
 // Database configuration
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('DB_NAME') ?: 'disaster_management');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_HOST', 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com;port=4000');
+define('DB_NAME', 'test');
+define('DB_USER', '2tGN85HQqGriFU6.root');
+define('DB_PASS', 'fWg2s6o5EGjMbmT7');
 
 // Email configuration
 define('ADMIN_EMAIL', 'arshdeep17022005@gmail.com');
