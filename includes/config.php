@@ -19,7 +19,10 @@ if (getenv('VERCEL_URL')) {
 
 // Create database connection
 try {
-    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS, [
+        PDO::MYSQL_ATTR_SSL_CA => __DIR__ . '/ca.pem',
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+    ]);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());

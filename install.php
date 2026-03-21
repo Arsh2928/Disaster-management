@@ -8,7 +8,11 @@ $user = '2tGN85HQqGriFU6.root';
 $pass = 'fWg2s6o5EGjMbmT7';
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_SSL_CA => __DIR__ . '/includes/ca.pem',
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+    ]);
 } catch (PDOException $e) {
     die('MySQL connection failed: ' . htmlspecialchars($e->getMessage()));
 }
