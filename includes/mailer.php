@@ -2,9 +2,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/Exception.php';
-require 'PHPMailer/PHPMailer.php';
-require 'PHPMailer/SMTP.php';
+require __DIR__ . '/../PHPMailer/Exception.php';
+require __DIR__ . '/../PHPMailer/PHPMailer.php';
+require __DIR__ . '/../PHPMailer/SMTP.php';
 
 function sendDisasterReportEmail($disasterData, $userData) {
     $mail = new PHPMailer(true);
@@ -12,22 +12,22 @@ function sendDisasterReportEmail($disasterData, $userData) {
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';  // Your SMTP server
+        $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'your mail';  // SMTP username
-        $mail->Password   = 'password';     // SMTP password
+        $mail->Username   = 'arshdeep17022005@gmail.com'; 
+        $mail->Password   = 'yblljpcqktclqzou';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         
         // Recipients
-        $mail->setFrom('your mail', 'Disaster Management System');
-        $mail->addAddress('your mail', 'Admin');  // Admin notification
-        $mail->addReplyTo($userData['email'], $userData['username']);  // Reply to reporter
+        $mail->setFrom('arshdeep17022005@gmail.com', 'Disaster Management System');
+        $mail->addAddress('arshdeep17022005@gmail.com', 'Admin');
+        $mail->addReplyTo($userData['email'], $userData['username']);
         
         // Content
         $mail->isHTML(true);
         $mail->Subject = '🚨 New Disaster Report: ' . htmlspecialchars($disasterData['title']);
-        $mail->Priority = 1; // Highest priority
+        $mail->Priority = 1;
         
         // Build email body
         $mail->Body = "
