@@ -11,10 +11,15 @@ define('DB_PASS', 'fWg2s6o5EGjMbmT7');
 define('ADMIN_EMAIL', 'arshdeep17022005@gmail.com');
 define('SITE_NAME', 'Disaster Management System');
 define('SITE_EMAIL', 'arshdeep17022005@gmail.com');
-if (getenv('VERCEL_URL')) {
-    define('BASE_URL', 'https://' . getenv('VERCEL_URL'));
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+if (isset($_SERVER['HTTP_HOST'])) {
+    if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+        define('BASE_URL', $protocol . '://' . $_SERVER['HTTP_HOST'] . '/disaster-management');
+    } else {
+        define('BASE_URL', 'https://' . $_SERVER['HTTP_HOST']);
+    }
 } else {
-    define('BASE_URL', getenv('BASE_URL') ?: 'http://localhost/disaster-management');
+    define('BASE_URL', 'http://localhost/disaster-management');
 }
 
 // Create database connection
