@@ -1,7 +1,4 @@
-CREATE DATABASE disaster_management;
-
-USE disaster_management;
-
+-- Tables will be created in the current database connected via DSN
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
