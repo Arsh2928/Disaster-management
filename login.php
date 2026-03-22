@@ -13,13 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     
-    $stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-    
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
+    if (loginUser($pdo, $username, $password)) {
         header('Location: index.php');
         exit();
     } else {
@@ -48,5 +42,5 @@ require_once 'includes/header.php';
     </form>
     <p>Don't have an account? <a href="register.php">Register here</a>.</p>
 </section>
-
+<script src="script.js"></script>
 <?php require_once 'includes/footer.php'; ?>

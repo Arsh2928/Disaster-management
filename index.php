@@ -44,13 +44,13 @@ require_once 'includes/header.php';
     <?php else: ?>
         <div class="disaster-grid">
             <?php foreach ($recent_disasters as $disaster): ?>
-                <div class="disaster-card" data-type="<?php echo $disaster['type']; ?>" data-severity="<?php echo $disaster['severity']; ?>">
+                <div class="disaster-card" data-type="<?php echo htmlspecialchars($disaster['type']); ?>" data-severity="<?php echo htmlspecialchars($disaster['severity']); ?>">
                     <h3><?php echo htmlspecialchars($disaster['title']); ?></h3>
-                    <p class="disaster-type <?php echo strtolower($disaster['type']); ?>">
-                        <?php echo ucfirst($disaster['type']); ?>
+                    <p class="disaster-type <?php echo htmlspecialchars(strtolower($disaster['type'])); ?>">
+                        <?php echo htmlspecialchars(ucfirst($disaster['type'])); ?>
                     </p>
                     <p><strong><i class="fas fa-map-marker-alt"></i> Location:</strong> <?php echo htmlspecialchars($disaster['location']); ?></p>
-                    <p><strong><i class="fas fa-bolt"></i> Severity:</strong> <?php echo ucfirst($disaster['severity']); ?></p>
+                    <p><strong><i class="fas fa-bolt"></i> Severity:</strong> <?php echo htmlspecialchars(ucfirst($disaster['severity'])); ?></p>
                     <p><?php echo htmlspecialchars(substr($disaster['description'], 0, 100)); ?>...</p>
                     <p class="disaster-date"><i class="far fa-clock"></i> Reported on: <?php echo date('M j, Y', strtotime($disaster['reported_at'])); ?></p>
                     <p class="reported-by"><i class="fas fa-user"></i> Reported by: <?php echo htmlspecialchars($disaster['username']); ?></p>
@@ -97,5 +97,4 @@ require_once 'includes/header.php';
         </div>
     </div>
 </section>
-
 <?php require_once 'includes/footer.php'; ?>

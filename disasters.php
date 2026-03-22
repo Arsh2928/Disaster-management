@@ -33,13 +33,13 @@ $disasters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     <div class="disaster-grid">
         <?php foreach ($disasters as $disaster): ?>
-            <div class="disaster-card" data-type="<?php echo $disaster['type']; ?>" data-severity="<?php echo $disaster['severity']; ?>">
+            <div class="disaster-card" data-type="<?php echo htmlspecialchars($disaster['type']); ?>" data-severity="<?php echo htmlspecialchars($disaster['severity']); ?>">
                 <h3><?php echo htmlspecialchars($disaster['title']); ?></h3>
-                <p class="disaster-type <?php echo strtolower($disaster['type']); ?>">
-                    <?php echo ucfirst($disaster['type']); ?>
+                <p class="disaster-type <?php echo htmlspecialchars(strtolower($disaster['type'])); ?>">
+                    <?php echo htmlspecialchars(ucfirst($disaster['type'])); ?>
                 </p>
                 <p><strong>Location:</strong> <?php echo htmlspecialchars($disaster['location']); ?></p>
-                <p><strong>Severity:</strong> <?php echo ucfirst($disaster['severity']); ?></p>
+                <p><strong>Severity:</strong> <?php echo htmlspecialchars(ucfirst($disaster['severity'])); ?></p>
                 <p><strong>Reported by:</strong> <?php echo htmlspecialchars($disaster['username']); ?></p>
                 <p><?php echo htmlspecialchars($disaster['description']); ?></p>
                 <p class="disaster-date">Reported on: <?php echo date('M j, Y H:i', strtotime($disaster['reported_at'])); ?></p>
@@ -53,5 +53,4 @@ $disasters = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 </section>
-
 <?php require_once 'includes/footer.php'; ?>
