@@ -1,6 +1,14 @@
 {
   "builds": [
     {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "**/*.php",
       "use": "vercel-php@0.6.2"
     }
