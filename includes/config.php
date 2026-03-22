@@ -1,6 +1,5 @@
 <?php
-session_start();
-
+// Removed duplicate session_start
 // Database configuration
 define('DB_HOST', 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com;port=4000');
 define('DB_NAME', 'test');
@@ -29,6 +28,37 @@ try {
         PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
     ]);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Custom Session Handler for Vercel Serverless
+    class DatabaseSessionHandler implements SessionHandlerInterface {
+        private $pdo;
+        public function __construct($pdo) { $this->pdo = $pdo; }
+        public function open(string $path, string $name): bool { return true; }
+        public function close(): bool { return true; }
+        public function read(string $id): string|false {
+            $stmt = $this->pdo->prepare("SELECT data FROM sessions WHERE id = ?");
+            $stmt->execute([$id]);
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) return $row['data'];
+            return '';
+        }
+        public function write(string $id, string $data): bool {
+            $stmt = $this->pdo->prepare("REPLACE INTO sessions (id, data, last_accessed) VALUES (?, ?, CURRENT_TIMESTAMP)");
+            return $stmt->execute([$id, $data]);
+        }
+        public function destroy(string $id): bool {
+            $stmt = $this->pdo->prepare("DELETE FROM sessions WHERE id = ?");
+            return $stmt->execute([$id]);
+        }
+        public function gc(int $max_lifetime): int|false {
+            $stmt = $this->pdo->prepare("DELETE FROM sessions WHERE last_accessed < DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ? SECOND)");
+            $stmt->execute([$max_lifetime]);
+            return $stmt->rowCount();
+        }
+    }
+    
+    session_set_save_handler(new DatabaseSessionHandler($pdo), true);
+    session_start();
+    
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
