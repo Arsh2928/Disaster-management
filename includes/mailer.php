@@ -14,8 +14,8 @@ function sendDisasterReportEmail($disasterData, $userData) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'arshdeep17022005@gmail.com'; 
-        $mail->Password   = 'yblljpcqktclqzou';
+        $mail->Username   = ''; 
+        $mail->Password   = '';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         
